@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TaskWarrior</string>
+    <string name="textOutput_string">Loading Tasks</string>
+</resources>
