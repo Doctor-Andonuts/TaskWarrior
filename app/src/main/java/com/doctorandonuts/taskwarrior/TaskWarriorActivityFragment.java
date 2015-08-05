@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.doctorandonuts.taskwarrior.sync.TaskWarriorSync;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -40,40 +42,61 @@ public class TaskWarriorActivityFragment extends Fragment {
         new updateTaskWarriorData().execute();
     }
 
-
-    private class updateTaskWarriorData extends AsyncTask<Void, Void, String> {
-        protected String doInBackground(Void... params) {
+    private class updateTaskWarriorData extends AsyncTask<Void, Void, JSONObject[]> {
+        protected JSONObject[] doInBackground(Void... params) {
             TaskWarriorSync taskWarriorSync = new TaskWarriorSync();
-            //String data = taskWarriorSync.getTaskWarriorData();
-            //return data;
-            return "DATA";
+            String data = taskWarriorSync.getTaskWarriorData();
+            try {
+                Log.d("TaskWarrior", data);
+                String[] split = data.split("\n");
+                JSONObject[] jsonObject = new JSONObject[split.length];
+                //Log.d("JSON", "Split Length" + split.length);
+                Log.d("JSON", "Split: " + split);
+                Log.d("JSON", "Split118: " + split[118]);
+                Log.d("JSON", "Split119: " + split[119]);
+                Log.d("JSON", "Split120: " + split[120]);
+                Log.d("JSON", "Split121: " + split[121]);
+                Log.d("JSON", "Split122: " + split[122]);
+                Log.d("JSON", "Split123: " + split[123]);
+                Log.d("JSON", "Split124: " + split[124]);
+                Log.d("JSON", "Split125: " + split[125]);
+                Log.d("JSON", "Split126: " + split[126]);
+                for(Integer i=0; i<split.length; i++) {
+                    //Log.d("JSON", "Loop Number " + i);
+                    //Log.d("JSON", "Split " + split[i]);
+                    jsonObject[i] = new JSONObject(split[i]);
+                }
+                Log.d("JSON", jsonObject[0].toString());
+                Log.d("JSON", jsonObject[1].toString());
+                Log.d("JSON", jsonObject[2].toString());
+                return jsonObject;
+            } catch (Exception e) {
+                Log.e("TaskWarrior", "Error parsing JSON data");
+            }
+            return null;
         }
-        protected void onPostExecute(String data) {
-            renderTaskWarrior(data);
+        protected void onPostExecute(JSONObject[] taskData) {
+            proccessTaskWarriorData(taskData);
         }
     }
 
-    private void renderTaskWarrior(String data) {
+    private void proccessTaskWarriorData(JSONObject[] taskData) {
         try {
-            textOutput.setText("START");
-
+            textOutput.setText(taskData[3].getString("description"));
 //            Task[] task = new Task[4];
 //            for(Integer i=0; i<4; i++) {
 //                task[i] = new Task();
 //                task[i].addText("Task: " + i.toString());
 //            }
 
-            final ArrayList<String> list = new ArrayList<>();
-            for (Integer i = 0; i < 4; i++) {
-                list.add(i.toString());
-            }
-            final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
-                    android.R.layout.simple_list_item_1, list);
-            listView.setAdapter(adapter);
-
-            textOutput.setText("END");
-
-        }catch(Exception e){
+//            final ArrayList<String> list = new ArrayList<>();
+//            for (Integer i = 0; i < 4; i++) {
+//                list.add(i.toString());
+//            }
+//            final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
+//                    android.R.layout.simple_list_item_1, list);
+//            listView.setAdapter(adapter);
+        } catch(Exception e) {
             Log.e("TaskWarrior", "PROBLEM:" + e.toString());
         }
     }
