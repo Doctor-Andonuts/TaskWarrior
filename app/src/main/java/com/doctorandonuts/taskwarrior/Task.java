@@ -11,12 +11,27 @@ import java.util.UUID;
 public class Task {
 
     private String description;
+    private String raw;
 
     public void importTask(JSONObject jsonTask) {
-
+        try {
+            description = jsonTask.getString("description");
+            raw = jsonTask.toString();
+        }
+        catch(Exception e) {
+            return;
+        }
     }
 
-//    "id":19,
+    public String getDescription() {
+        return description;
+    }
+
+    public String getRaw() {
+        return raw;
+    }
+
+    //    "id":19,
 //    "brainpower":"M",
 //    "description":"Pay Medical bill",
 //    "entry":"20150529T202744Z",
