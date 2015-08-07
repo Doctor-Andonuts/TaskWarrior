@@ -146,7 +146,9 @@ public class TaskWarriorSync {
 
         try {
             final TLSClient client = new TLSClient();
+
             try {
+                // Initialize all the TLS and cert info for a connection
                 client.init(ca_cert, Andonuts_cert, Andonuts_key);
             } catch (final ParseException e) {
                 Log.e(TAG, "cannot open certificate", e);
@@ -155,7 +157,9 @@ public class TaskWarriorSync {
             } catch (final TLSClient.NoSuchCertificateException e) {
                 Log.e(TAG, "NoSuchCertificateException", e);
             }
+
             try {
+                // Create TLS connection
                 client.connect("andonuts.asuscomm.com", 53589);
             } catch (final IOException e) {
                 Log.e(TAG, "cannot create socket" + e.toString(), e);

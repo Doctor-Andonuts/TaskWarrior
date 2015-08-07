@@ -67,6 +67,7 @@ public class TLSClient {
 
     }
 
+    // Tag for Log messages for this class
     private static final String TAG = "TLSClient";
 
     private static List<X509Certificate> generateCertificateFromPEM(final String cert)
