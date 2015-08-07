@@ -53,11 +53,11 @@ public class TaskWarriorActivityFragment extends Fragment {
 
                 JSONObject[] jsonObject = new JSONObject[split.length];
                 for(Integer i=0; i<split.length; i++) {
-                    if(split[i].substring(0,1).equals("{")) {
+                    //if(split[i].substring(0,1).equals("{")) {
                         //Log.d("JSON", "SUBSTR(0,1) #" + i + ": " + split[i].substring(0,1));
-                        //Log.d("JSON", "Split #" + i + ": " + split[i]);
-                        jsonObject[i] = new JSONObject(split[i]);
-                    }
+                        Log.d("JSON", "Split #" + i + ": " + split[i]);
+                    //    jsonObject[i] = new JSONObject(split[i]);
+                    //}
                 }
                 return jsonObject;
             } catch (Exception e) {
@@ -82,7 +82,7 @@ public class TaskWarriorActivityFragment extends Fragment {
             list.clear();
             for (Integer i = 0; i < task.length; i++) {
                 //Log.d("ARG", task[i].getDescription());
-                //Log.d("ARG", task[i].getRaw());
+                //Log.d("ARG", "Line: " + i + " || Content: " + task[i].getRaw());
                 list.add(task[i].getDescription());
             }
             final ArrayAdapter adapter = new ArrayAdapter(getActivity(),
